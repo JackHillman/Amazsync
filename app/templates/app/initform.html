@@ -1,0 +1,50 @@
+<div class="form-container hidden" id="init-form">
+	<span class="close-button glyphicon glyphicon-remove"></span>
+	<div class="project-item container text-center">
+		<div class="row">
+			{% verbatim %}
+			<div class="col-sm-3">{{ name }}</div>
+			<div class="col-sm-3">{{ description }}</div>
+			<div class="col-sm-3">{{ created }}</div>
+			<div class="col-sm-3">{{ type }}</span></div>
+			{% endverbatim %}
+		</div>
+	</div>
+	<form class="form-horizontal" action="/" method="post" onsubmit="setTimeout(function() { window.location.reload(); }, 500);">
+		{% csrf_token %}
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="text" class="form-control" v-model="path" name="path" readonly></p>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="text" class="form-control" v-model="name" placeholder="Name" name="name" required></input>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="text" class="form-control" v-model="description" placeholder="Description" name="description" required></input>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<input type="text" class="form-control" v-model="created" name="created" readonly></input>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<select v-model="type" class="form-control" name="type">
+				{% for type in types %}
+					<option value="{{ type.name }}">{{ type.name }}</option>
+				{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<button type="submit" {% verbatim %}class="btn btn-block {{ existing ? 'btn-success' : 'btn-primary' }}">{{ label }}{% endverbatim %}</button>
+			</div>
+		</div>
+	</form>
+</div>

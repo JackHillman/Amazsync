@@ -1,0 +1,39 @@
+{% extends "app/layout.html" %}
+
+{% load app_extras %}
+
+{% block content %}
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+			<th>Created</th>
+			<th class="text-center">Type</th>
+			<th class="text-center">Action</th>
+			<th class="text-center">Edit</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for project in projects %}
+		<tr>
+
+			<td>{{ project.name }}</td>
+			<td><em>{{ project.description }}</em></td>
+			<td>{{ project.created }}</td>
+			<td class="{{ project.project_type | lower }} text-center"><span class="{{ project.project_type | getcolour }} input-type">{{ project.project_type }}<span></td>
+			{% if project.new %}
+			<td><button type="button" class="btn btn-xs btn-block btn-info" onclick="initProject('{{ project.path }}');">Initialize</button></td>
+			{% else %}
+			<td><button type="button" class="btn btn-xs btn-block {% if project.error %}btn-warning{% else %}btn-primary{% endif %}" {% if project.error %}data-toggle="tooltip" title="Outdated project data"{% endif %}onclick="openProject('{{ project.path }}');">Open</button></td>
+			<td><button type="button" class="btn btn-xs btn-block" onclick="editProject('{{ project.path }}');">Edit</button></td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+<small>{{ count }} Projects</small>
+
+{% endblock %}
